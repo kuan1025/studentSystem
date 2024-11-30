@@ -1,5 +1,6 @@
 package com.kuan.studentSystem.student;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,8 +25,11 @@ public class Student {
     @GeneratedValue(
             generator = "student_sequence", strategy = GenerationType.SEQUENCE)
     private Long id;
+
     private String name;
     private String email;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     public Student(String name, String email, Gender gender) {

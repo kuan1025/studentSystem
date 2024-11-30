@@ -6,9 +6,11 @@ import {
   PieChartOutlined,
   TeamOutlined,
   UserOutlined,
-  LoadingOutlined
+  LoadingOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Table, Spin, Empty } from 'antd';
+import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button } from 'antd';
+import StudentDrawerForm from './StudentDrawerForm';
 
 const columns = [
   {
@@ -44,6 +46,7 @@ function App() {
   const [students, setStudents] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [showDrawer, setShowDrawer] = useState(false)
 
   const fetchStudents = () => {
     getAllStudents()
@@ -69,15 +72,28 @@ function App() {
     if(students.length <= 0 ){
       return <Empty/>
     }
-      return <Table 
+    return <>
+    <StudentDrawerForm
+      showDrawer={showDrawer}
+      setShowDrawer={setShowDrawer}
+    />
+    <Table 
       dataSource={students}
       columns={columns} 
       bordered
-      title={() => 'Students'}
+      title={() => 
+      <Button 
+        onClick={()=>{setShowDrawer(!showDrawer)}}
+        type="primary" 
+        shape="round" 
+        icon={<PlusOutlined />} size="small">
+        Add New Student 
+     </Button>}
       pagination={{ pageSize: 50 }}
       scroll={{ y: 240 }}
       rowKey = {(student) => student.id}
       />;
+      </>
     
   }
 

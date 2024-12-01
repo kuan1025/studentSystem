@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllStudents } from './client';
+import { getAllStudents, deleteStudent } from './client';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -9,31 +9,9 @@ import {
   LoadingOutlined,
   PlusOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button } from 'antd';
+import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm , Radio} from 'antd';
 import StudentDrawerForm from './StudentDrawerForm';
-
-const columns = [
-  {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 'gender',
-  },
-];
+import { successNotification } from "./notification";
 
 
 
@@ -41,8 +19,68 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 
 function App() {
+
   const { Header, Content, Footer, Sider } = Layout;
-  
+  const TheAvatar = ({ name }) => {
+    let trim = name.trim();
+    if (trim.length === 0) {
+      return <Avatar icon={<UserOutlined />} />
+    }
+    const split = trim.split(" ");
+    if (split.length === 1) {
+      return <Avatar>{name.charAt(0)}</Avatar>
+    }
+    return <Avatar>{`${name.charAt(0)}${name.charAt(name.length - 1)}`}</Avatar>
+  }
+
+  const deleteStudentById = (student, callback) => {
+    deleteStudent(student.id).then(() => {
+      successNotification("student success deleted", `${student.name} was removed to the system`);
+      callback();
+    })
+  }
+
+  const columns = [
+    {
+      title: '',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      render: (text, student) => <TheAvatar name={student.name} />
+    },
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
+      render: (text, student) =>
+        <Radio.Group>
+          <Popconfirm placement='topRight' title={`Are you sure to delete ${student.name}`} onConfirm={() => deleteStudentById(student, fetchStudents)} okText="Yes" cancelText="No">
+            <Radio.Button>Delete</Radio.Button>
+          </Popconfirm>
+          <Radio.Button value="small">Edit</Radio.Button>
+        </Radio.Group>
+    }
+  ];
+
   const [students, setStudents] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -55,7 +93,6 @@ function App() {
         setStudents(data);
         setFetching(false);
       })
-      
       .catch(error => console.error("Error fetching students:", error));
   }
 
@@ -65,36 +102,44 @@ function App() {
   }, []);
 
 
-  const renderStudents = () =>{
-    if(fetching){
+  const renderStudents = () => {
+    if (fetching) {
       return <Spin indicator={antIcon} />
     }
-    if(students.length <= 0 ){
-      return <Empty/>
+    if (students.length <= 0) {
+      return <Empty />
     }
     return <>
-    <StudentDrawerForm
-      showDrawer={showDrawer}
-      setShowDrawer={setShowDrawer}
-    />
-    <Table 
-      dataSource={students}
-      columns={columns} 
-      bordered
-      title={() => 
-      <Button 
-        onClick={()=>{setShowDrawer(!showDrawer)}}
-        type="primary" 
-        shape="round" 
-        icon={<PlusOutlined />} size="small">
-        Add New Student 
-     </Button>}
-      pagination={{ pageSize: 50 }}
-      scroll={{ y: 240 }}
-      rowKey = {(student) => student.id}
+      <StudentDrawerForm
+        showDrawer={showDrawer}
+        setShowDrawer={setShowDrawer}
+        fetchStudent={fetchStudents}
+      />
+      <Table
+        dataSource={students}
+        columns={columns}
+        bordered
+        title={() =>
+          <>
+            <Tag style={{ margin: "0px 5px" }}>Number of students</Tag>
+            <Badge count={students.length} className='site-badge-count-4' />
+            <br />
+            <br />
+            <Button
+              onClick={() => { setShowDrawer(!showDrawer) }}
+              type="primary"
+              shape="round"
+              icon={<PlusOutlined />} size="small">
+              Add New Student
+            </Button>
+          </>
+        }
+        pagination={{ pageSize: 50 }}
+        scroll={{ y: 240 }}
+        rowKey={(student) => student.id}
       />;
-      </>
-    
+    </>
+
   }
 
   return (
@@ -124,13 +169,13 @@ function App() {
               borderRadius: '8px',
             }}
           >
-            <div className='site-layout-background' style={{padding:24, minHeight:36}}>
-                {renderStudents()}
+            <div className='site-layout-background' style={{ padding: 24, minHeight: 36 }}>
+              {renderStudents()}
             </div>
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-            By Kuan
+          By Kuan
         </Footer>
       </Layout>
     </Layout>

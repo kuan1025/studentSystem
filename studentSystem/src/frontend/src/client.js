@@ -5,6 +5,7 @@ const checkStatus = response => {
     if(response.ok){
         return response;
     }
+
     const error = new Error(response.statusText);
     error.response = response;
     return Promise.reject(error);
@@ -21,7 +22,7 @@ export const addNewStudent = student =>
         },
         method:'POST',
         body:JSON.stringify(student)
-    });
+    }).then(checkStatus);
 
 export const deleteStudent = id =>
     fetch (`api/V1/students/${id}`,{

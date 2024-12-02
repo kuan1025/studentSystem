@@ -24,7 +24,9 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudent}){
             successNotification("student success added", `${student.name} was added to the system`);
             fetchStudent();
         }).catch(err =>{
-            console.log(err)
+            err.response.json().then(resp=>{
+                errorNotification("There was an issue", `${resp.message} [status code ${resp.status}][${resp.error}]`)
+               })
         }).finally(()=>{
             setSubmitting(false)
         })
@@ -86,9 +88,9 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudent}){
                         rules={[{required:true, message: "Please select student gender"}]}
                     >
                         <Select placeholder="Please select a gender">
-                            <Option value='MALE'>MALE</Option>
-                            <Option value='FEMALE'>FEMALE</Option>
-                            <Option value='FEMALE'>OTHER</Option>
+                            <Option id='MALE' value='MALE'>MALE</Option>
+                            <Option id='FEMALE' value='FEMALE'>FEMALE</Option>
+                            <Option id='OTHER' value='OTHER'>OTHER</Option>
                         </Select>
                     </Form.Item>
                 </Col>

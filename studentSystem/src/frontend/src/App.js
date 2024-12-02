@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm , Radio} from 'antd';
 import StudentDrawerForm from './StudentDrawerForm';
-import { successNotification } from "./notification";
+import { successNotification, errorNotification } from "./notification";
 
 
 
@@ -37,7 +37,11 @@ function App() {
     deleteStudent(student.id).then(() => {
       successNotification("student success deleted", `${student.name} was removed to the system`);
       callback();
-    })
+    }).catch(err =>{
+      err.response.json().then(resp=>{
+          errorNotification("There was an issue", `${resp.message} [status code ${resp.status}][${resp.error}]`)
+         })
+  })
   }
 
   const columns = [
@@ -91,9 +95,12 @@ function App() {
       .then(res => res.json())
       .then(data => {
         setStudents(data);
-        setFetching(false);
       })
-      .catch(error => console.error("Error fetching students:", error));
+      .catch(error =>{
+         error.response.json().then(resp=>{
+          errorNotification("There was an issue", `${resp.message} [status code ${resp.status}][${resp.error}]`)
+         })
+        }).finally(()=>setFetching(false));
   }
 
   useEffect(() => {

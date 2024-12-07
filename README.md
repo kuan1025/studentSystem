@@ -9,3 +9,7 @@
 ### structure
 <img width="773" alt="" src="./image/structure_1.png">
 
+### RDS (Relational Database Service)
+
+When creating a database with Elastic Beanstalk, to facilitate development, the security group's inbound rules should include the IP addresses that need access and allow the PostgreSQL protocol.
+

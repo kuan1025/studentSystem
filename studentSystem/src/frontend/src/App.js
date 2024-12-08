@@ -9,7 +9,7 @@ import {
   LoadingOutlined,
   PlusOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm , Radio} from 'antd';
+import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm , Image ,Radio} from 'antd';
 import StudentDrawerForm from './StudentDrawerForm';
 import { successNotification, errorNotification } from "./notification";
 
@@ -197,7 +197,10 @@ function App() {
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-          By Kuan
+          <Image 
+            width={75}
+            src="profile.png"
+          />
         </Footer>
       </Layout>
     </Layout>

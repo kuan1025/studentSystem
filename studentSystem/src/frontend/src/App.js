@@ -9,7 +9,7 @@ import {
   LoadingOutlined,
   PlusOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm , Image ,Radio} from 'antd';
+import { Breadcrumb, Layout, Menu, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm , Image ,Radio, Divider} from 'antd';
 import StudentDrawerForm from './StudentDrawerForm';
 import { successNotification, errorNotification } from "./notification";
 
@@ -202,6 +202,14 @@ function App() {
             src="profile.png"
           />
         </Footer>
+        <Divider>
+          <a 
+            rel='noopener noreferrer'
+            target='_blank' 
+            href='https://github.com/kuan1025/studentSystem'>
+            Click here to access repository of student system
+          </a>
+        </Divider>
       </Layout>
     </Layout>
   );

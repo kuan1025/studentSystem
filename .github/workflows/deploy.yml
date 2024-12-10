@@ -67,6 +67,7 @@ jobs:
         run: echo "Navigating to target project directory studentSystem"
 
       - name: Maven Clean Package and Push to Dockerhub
+        working-directory: ./studentSystem
         run: |
           ./mvnw --no-transfer-progress clean package \
             -P jib-push-to-dockerhub \

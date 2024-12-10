@@ -203,7 +203,10 @@ function App() {
           />
         </Footer>
         <Divider>
-          <a target='_blank' href='https://github.com/kuan1025/studentSystem'>
+          <a 
+            rel='noopener noreferrer'
+            target='_blank' 
+            href='https://github.com/kuan1025/studentSystem'>
             Click here to access repository of student system
           </a>
         </Divider>

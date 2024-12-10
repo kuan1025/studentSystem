@@ -68,7 +68,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.kuan.studentSystem.StudentSystemApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -80,7 +79,7 @@
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>2.5.2</version>
+				<version>3.2.1</version>
 				<configuration>
 					<from>
 						<image>openjdk:17</image>
@@ -241,7 +240,7 @@
 					<plugin>
 						<groupId>com.google.cloud.tools</groupId>
 						<artifactId>jib-maven-plugin</artifactId>
-						<version>2.5.2</version>
+						<version>3.2.1</version>
 						<configuration>
 							<from>
 								<image>openjdk:17</image>
@@ -355,7 +354,7 @@
 					<plugin>
 						<groupId>com.google.cloud.tools</groupId>
 						<artifactId>jib-maven-plugin</artifactId>
-						<version>2.5.2</version>
+						<version>3.2.1</version>
 						<configuration>
 							<from>
 								<image>openjdk:17</image>

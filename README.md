@@ -8,6 +8,8 @@
 
 ### structure
 <img width="773" alt="" src="./image/structure_1.png">
+<img width="773" alt="" src="./image/outline_1.png">
+<img width="773" alt="" src="./image/outline_2.png">
 
 ### RDS (Relational Database Service)
 

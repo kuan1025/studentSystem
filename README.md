@@ -11,7 +11,13 @@
 <img width="773" alt="" src="./image/outline_1.png">
 <img width="773" alt="" src="./image/outline_2.png">
 
+
+### Testing
+<img width="773" alt="" src="./image/testing.png">
+
+
 ### RDS (Relational Database Service)
 
 When creating a database with Elastic Beanstalk, to facilitate development, the security group's inbound rules should include the IP addresses that need access and allow the PostgreSQL protocol.
+
 

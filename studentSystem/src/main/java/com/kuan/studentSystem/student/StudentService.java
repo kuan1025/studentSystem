@@ -1,5 +1,6 @@
 package com.kuan.studentSystem.student;
 
+import com.kuan.studentSystem.student.exception.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,11 @@ public class StudentService {
     }
 
     public void addStudent(Student student) {
+        boolean check = studentRepository.selectExistsEmail(student.getEmail());
+        if(check){
+            throw new BadRequestException("Email "+ student.getEmail() + " taken");
+        }
+
         studentRepository.save(student);
     }
 
